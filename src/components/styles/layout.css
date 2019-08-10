@@ -1,0 +1,82 @@
+.app-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-height: 5vh;
+  font-size: calc(10px + 2vmin);
+  background-color: #282c34;
+  color: #fff;
+}
+
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7%;
+  height: 4vh;
+  background-color: #fff;
+  color: #282c34;
+  border-radius: 45px;
+}
+
+.login-button:hover {
+  background-color: #282c34;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.app-body {
+  background-color: #fff;
+  min-height: 90vh;
+  display: flex;
+  font-size: calc(10px + 2vmin);
+  color: #fff;
+}
+
+.user-list {
+  width: 20%;
+  height: 90vh;
+}
+
+.user-list:after {
+  width: 1px;
+  height: 90vh;
+  background-color: #282c34;
+}
+
+.chat-body {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 80%;
+  height: 90vh;
+}
+
+.message-input-block, .message-input {
+  width: 80%;
+  height: 40%;
+}
+
+.app-footer {
+  background-color: #282c34;
+  min-height: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #fff;
+}
+
+.message-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 70%;
+}
+
+.messages {
+  width: 70%;
+  height: 70%;
+  color: #000;
+}
