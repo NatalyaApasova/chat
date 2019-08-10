@@ -11,15 +11,7 @@ class Layout extends React.Component {
           <div className="login-button"><div>Log in</div></div>
         </header>
         <main className="app-body">
-          <div className="user-list"></div>
-          <div className="chat-body">
-            <div className="message-field"
-                 id="messages">
-            </div>
-            <div className="message-input-block">
-              <ChatForm />
-            </div>
-          </div>
+            <ChatForm />
         </main>
         <footer className="app-footer">
         </footer>

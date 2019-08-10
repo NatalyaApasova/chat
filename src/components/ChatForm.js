@@ -2,12 +2,11 @@ import React from 'react';
 import './styles/layout.css';
 import { DateTime } from 'luxon';
 
-class ChatForm extends React.Component {
+export default class ChatForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: '',
-      message: 'some message',
       messages: []
     };
 
@@ -33,8 +32,20 @@ class ChatForm extends React.Component {
 
   wsMessage(e) {
     const chatMessage = JSON.parse(e.data);
-    this.setState({message: chatMessage[0].message});
-    this.setState({messages: [...this.state.messages, this.state.message]})
+    console.log(chatMessage)
+    if(chatMessage[0] !== undefined) {
+      const msg = {
+        from: chatMessage[0].from,
+        message: chatMessage[0].message,
+        date: chatMessage[0].time
+      }
+    console.log(msg)
+    this.setState({messages: [...this.state.messages, msg]});
+    }
+    // this.setState({messages: [{from: 'Test', message: 'Test', data: ''}]})
+    // let a = this.state.messages;
+    // a.push(msg)
+    // console.log([a, JSON.stringify(msg)]);
   }
 
   handleChange(event) {
@@ -42,11 +53,9 @@ class ChatForm extends React.Component {
   }
 
   handleSubmit(event) {
-    console.log('WS')
-    console.log(this.state.ws);
     const message = {
-      "from": "Natta",
-      "message": this.state.value,
+      from: "Natta",
+      message: this.state.value,
       // "time": DateTime.local()
     }
 
@@ -55,41 +64,43 @@ class ChatForm extends React.Component {
   }
 
   wsOpen(e) {
-    this.handleSubmit(JSON.stringify({ "name":"Natta", "text": "Who am I? Where am I?" }));
+    console.log('Connect...')
   }
 
   componentDidMount() {
     this.wsConnection();
-    // this.wsOpen();
+    this.wsOpen();
 
     // const doSend = function(message) {
   // if (this.state.ws) this.state.ws.onclose = function(e) { this.wsClose(e) };
 }
 
   render() {
-    // return (
-    //   <form className="message-form" onSubmit={this.handleSubmit}>
-    //     <label>
-    //       <textarea className="message-input" value={this.state.value} onChange={this.handleChange} />
-    //     </label>
-    //     <div>
-    //       <input type="submit" value="Submit" />
-    //     </div>
-    //   </form>
-    // );
     return (
-      <div className="message-form">
-        <div className="messages">
-          {this.state.messages}
+      <>
+        <div className="user-list">
+          {this.state.messages.map((message) => {return <p>{message.from}</p>})}
         </div>
-        <label>
-          <input type="text" className="message-input" value={this.state.value} onChange={this.handleChange} />
-          <input type="submit" value="Submit" onClick={this.handleSubmit}/>
-        </label>
-      </div>
+        <div className="message-form">
+          <div className="messages">
+            <div className="message">
+              {this.state.messages.map((message) => {
+                return (
+                  <>
+                    <p>From: {message.from}</p>
+                    <p>{message.message}</p>
+                    <p>Date: {message.date}</p>
+                 </>
+                )
+              })}
+            </div>
+          </div>
+          <label>
+            <textarea type="text" className="message-input" value={this.state.value} onChange={this.handleChange} />
+            <input  type="submit" value="Submit" onClick={this.handleSubmit}/>
+          </label>
+        </div>
+      </>
     );
-
   }
 }
-
-export default ChatForm;
