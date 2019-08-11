@@ -1,48 +1,11 @@
-.app-header {
-  background-color: #282c34;
-  min-height: 5vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .app-body {
   background-color: #fff;
   min-height: 90vh;
   display: flex;
   font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.user-list {
-  width: 20%;
-  height: 90vh;
-  border-right: 1px solid #000;
-}
-
-.chat-body {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  width: 80%;
-  height: 90vh;
 }
 
 .message-input-block, .message-input {
   width: 80%;
   height: 40%;
-}
-
-.app-footer {
-  background-color: #282c34;
-  min-height: 5vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
