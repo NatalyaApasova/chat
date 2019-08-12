@@ -3,8 +3,6 @@ import './styles/layout.css';
 import { DateTime } from 'luxon';
 import { Message } from './Message.js';
 
-const dt = DateTime.local();
-
 export default class ChatForm extends React.Component {
   constructor(props) {
     super(props);
@@ -15,6 +13,7 @@ export default class ChatForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.wsMessage = this.wsMessage.bind(this);
+    this.wsOpen = this.wsOpen.bind(this);
     this.wsClose = this.wsClose.bind(this);
   }
 
@@ -34,14 +33,13 @@ export default class ChatForm extends React.Component {
   wsMessage(e) {
     const chatMessage = JSON.parse(e.data);
     console.log(chatMessage)
-
+    let date = DateTime.local().toLocaleString(DateTime.DATETIME_FULL);
     if(chatMessage[0] !== undefined) {
       const msg = {
         from: chatMessage[0].from,
         message: chatMessage[0].message,
-        date: dt
+        date: date
       }
-    console.log(msg)
     this.setState({messages: [...this.state.messages, msg]});
     }
   }
@@ -52,12 +50,10 @@ export default class ChatForm extends React.Component {
 
   handleSubmit(event) {
     const message = {
-      from: this.props.login,
+      from: localStorage.getItem('login') || this.props.login,
       message: this.state.value
     }
     this.state.ws.send(JSON.stringify(message));
-    // this.setState({input.value: ''})
-    // this.state.ws.send("");
   }
 
   wsOpen(e) {
@@ -78,13 +74,11 @@ export default class ChatForm extends React.Component {
       <>
         <div className="message-form">
           <div className="messages">
-            <div className="message">
               {this.state.messages.map((message) => {
                 return (
                   <Message message={message} />
                 )
               })}
-            </div>
           </div>
           <label>
             <textarea className="message-input" type="text" value={this.state.value} onChange={this.handleChange} />

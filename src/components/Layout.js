@@ -22,7 +22,7 @@ class Layout extends React.Component {
       <>
         <header className="app-header">
           <span>Chat</span>
-          <span>{this.state.login || "Guest"}</span>          
+          <span>{this.state.login || localStorage.getItem('login') || "Guest"}</span>          
           <div><Login getLogin={this.getLogin} /></div>
         </header>
         <main className="app-body">

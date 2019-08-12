@@ -4,8 +4,8 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "Guest",
-      name: "Guest"
+      name: localStorage.getItem('login') || "Guest",
+      value: localStorage.getItem('login') || "Guest"
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,6 +19,7 @@ export default class Login extends React.Component {
 
   handleSubmit() {
     this.props.getLogin(this.state.name);
+    localStorage.setItem('login', `${this.state.name}`)
   }
 
   render() {
