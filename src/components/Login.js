@@ -19,14 +19,26 @@ export default class Login extends React.Component {
 
   handleSubmit() {
     this.props.getLogin(this.state.name);
-    localStorage.setItem('login', `${this.state.name}`)
+    localStorage.setItem('login', `${this.state.name}`);
+    Notification.requestPermission().then((result) => {
+      switch(result){
+        case 'denied':
+          console.log('Permission wasn\'t granted. Allow a retry.');
+          break;
+        case 'granted':
+          console.log('The permission request was granted.');
+          break;
+        default:
+          console.log('The permission request was dismissed.');
+          break;
+      }
+    })
   }
 
   render() {
     return (
       <>
-        <div><input type="text" value={this.state.value} onChange={this.handleChange} /></div>
-        <div><input type="submit" value="Change name" onClick={this.handleSubmit} /></div>
+        <div><input type="text" value={this.state.value} onChange={this.handleChange} /><input type="submit" value="Change name" onClick={this.handleSubmit} /></div>
       </>
     )
   }
