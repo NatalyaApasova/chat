@@ -3,29 +3,12 @@
   flex-direction: row;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
-  background-color: #282c34;
+  background-color: #092c34;
   color: #fff;
-}
-
-.login-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 7%;
-  height: 4vh;
-  background-color: #fff;
-  color: #282c34;
-  border-radius: 45px;
-}
-
-.login-button:hover {
-  background-color: #282c34;
-  color: #fff;
-  border: 1px solid #fff;
 }
 
 .app-body {
-  background-color: #092c34;
+  background-color: #282c34;
   height: 90vh;
   font-size: calc(10px + 2vmin);
   overflow: hidden;
@@ -37,7 +20,7 @@
 }
 
 .app-footer {
-  background-color: #282c34;
+  background-color: #092c34;
   min-height: 5vh;
   display: flex;
   flex-direction: column;
@@ -49,7 +32,7 @@
 
 .messages {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   width: 90%;
   height: 65vh;
   color: #092cff;
