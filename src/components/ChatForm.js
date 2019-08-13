@@ -32,43 +32,34 @@ export default class ChatForm extends React.Component {
 
   wsMessage(e) {
     const chatMessage = JSON.parse(e.data);
-    chatMessage.length = 100;
     console.log(chatMessage)
     let date = DateTime.local().toLocaleString(DateTime.DATETIME_FULL);
-    if((chatMessage[0] !== undefined) && (this.props.login !== "Guest".toLowerCase())) {
-    const msg = {
-      from: chatMessage[0].from,
-      message: chatMessage[0].message,
-      date: date
-    }
+    if (this.wsConnection && (chatMessage[0] !== undefined) && (this.props.login !== "Guest".toLowerCase())) {
+      const msg = {
+        from: chatMessage[0].from,
+        message: chatMessage[0].message,
+        date: date
+      }
       this.setState({messages: [...this.state.messages, msg]});
     }
-    
-    if(this.wsConnection) {
-      chatMessage.map((msg) => {
-        msg = {
-          from: msg.from,
-          message: msg.message,
-          date: date
-        }
-          // date: DateTime.fromMillis(msg.time).toFormat(DateTime.DATETIME_MED_WITH_SECONDS)
-        return this.setState({messages: [...this.state.messages, msg]});
-      })
-    }
-    
-    if(Notification.permission === "granted") {
-            chatMessage.map((msg) => {
 
+    let hidden;
+    let visibilityChange; 
+    if (typeof document.webkitHidden !== "undefined") {
+      hidden = "webkitHidden";
+      visibilityChange = "webkitvisibilitychange";
+    }
+
+    if (Notification.permission === "granted" && document[hidden]) {
+      chatMessage.map((msg) => {
         msg = {
           from: chatMessage[0].from,
           message: chatMessage[0].message,
           date: date
         }
-        let title = msg.from;
-        let body =  msg.message;
-
-        const notification = new Notification(`From: ${title}: \"${body}\"`);
-        return notification;
+      let title = msg.from;
+      let body =  msg.message;
+      const notification = new Notification(`From: ${title}: \"${body}\"`);
       })
     }
   }
@@ -79,7 +70,7 @@ export default class ChatForm extends React.Component {
 
   handleSubmit(event) {
     const message = {
-      from: this.props.login,
+      from: localStorage.getItem('login') || this.props.login,
       message: this.state.value
     }
     this.state.ws.send(JSON.stringify(message));
@@ -101,12 +92,12 @@ export default class ChatForm extends React.Component {
     this.scrollToBottom();
   }
 
-  scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-  }
-
   componentDidUpdate() {
     this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   render() {
@@ -119,9 +110,9 @@ export default class ChatForm extends React.Component {
                   <Message key={message.id} message={message} />
                 )
               })}
-          <div style={{ float:"left", clear: "both" }}
-             ref={(el) => { this.messagesEnd = el; }}>
-          </div>
+            <div style={{ float:"left", clear: "both" }}
+               ref={(el) => { this.messagesEnd = el; }}>
+            </div>
           </div>
           <label>
             <textarea className="message-input" type="text" value={this.state.value} ref={(input) => { this.nameInput = input; }} 
