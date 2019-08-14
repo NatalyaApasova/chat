@@ -40,7 +40,7 @@
 }
 
 .message {
-  display: block;
+  height: 10rem;
   margin-bottom: 10px;
   margin-left: 1rem;
   margin-right: 1rem;

@@ -26,8 +26,8 @@ export default class ChatForm extends React.Component {
   }
 
   wsClose() {
-    this.wsConnection();
     console.log('Closing connection...');
+    this.wsConnection();
   }
 
   wsMessage(e) {
@@ -114,11 +114,6 @@ export default class ChatForm extends React.Component {
 
   wsOpen(e) {
     console.log('Connect...')
-    // if (this.state.offlineMessages.length) {
-    //   this.state.offlineMessages.map((msg) => {
-    //     this.state.ws.send(JSON.stringify(msg));
-    //   })
-    // }
   }
 
   wsError() {

@@ -21,9 +21,9 @@ export default class Layout extends React.Component {
 
   getNetworkStatus(online) {
     if (!navigator.onLine) {
-      this.setState({online: false})
+      this.setState({online: true})
     }
-    this.setState({online: true})
+    this.setState({online: false})
   }
 
   render() {
