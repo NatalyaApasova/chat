@@ -65,7 +65,7 @@ export default class ChatForm extends React.Component {
         }
       let title = msg.from;
       let body =  msg.message;
-      const notification = new Notification(`There is a new message for you from ${title}: \"${body}\"`);
+      const notification = new Notification(`A new messages from ${title}: \"${body}\"`);
       })
     }
   }

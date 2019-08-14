@@ -41,17 +41,13 @@ export default class NetworkStatus extends React.Component {
   }
 
   render() {
-    if (this.state.online) {
+    if (!this.state.online) {
       return (
-        <>
-          <div className="offline" onClick={this.handleClick}></div>
-        </>
+        <div className="offline" onClick={this.handleClick}></div>
       )
     } else {
       return (
-        <>
-          <div className="online" onClick={this.handleClick}></div>
-        </>
+        <div className="online" onClick={this.handleClick}></div>
       )
     }
   }

@@ -8,23 +8,31 @@ class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: ''
+      login: '',
+      online: true
     }
     this.getLogin = this.getLogin.bind(this);
+    this.getNetworkStatus = this.getNetworkStatus.bind(this);
   }
 
   getLogin(login){
-    console.log(login)
     this.setState({login: login}) || localStorage.getItem('login');
+  }
+
+  getNetworkStatus(online) {
+    if (!navigator.onLine) {
+      this.setState({online: true})
+    }
+    this.setState({online: false})
   }
 
   render() {
     return (
       <>
         <header className="app-header">
-          <span>Chat</span>
-          <span>You are awesome, {this.state.login || localStorage.getItem('login') || "Guest"}! Have a nice talk!</span>          
-          <NetworkStatus />
+          <div className="logo"><h1>Chat</h1></div>
+          <span>You are awesome, {this.state.login || localStorage.getItem('login') || "Guest"}! Have a nice talk! :)</span>          
+          <NetworkStatus status={this.state.online}/>
           <div><Login getLogin={this.getLogin} /></div>
         </header>
         <main className="app-body">
