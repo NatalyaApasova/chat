@@ -2,6 +2,7 @@ import React from 'react';
 import './styles/layout.css';
 import ChatForm from './ChatForm.js';
 import Login from './Login.js';
+import NetworkStatus from './NetworkStatus.js';
 
 class Layout extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class Layout extends React.Component {
 
   getLogin(login){
     console.log(login)
-    this.setState({login: login});
+    this.setState({login: login}) || localStorage.getItem('login');
   }
 
   render() {
@@ -22,7 +23,8 @@ class Layout extends React.Component {
       <>
         <header className="app-header">
           <span>Chat</span>
-          <span>{this.state.login || localStorage.getItem('login') || "Guest"}</span>          
+          <span>You are awesome, {this.state.login || localStorage.getItem('login') || "Guest"}! Have a nice talk!</span>          
+          <NetworkStatus />
           <div><Login getLogin={this.getLogin} /></div>
         </header>
         <main className="app-body">

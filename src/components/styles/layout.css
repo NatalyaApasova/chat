@@ -60,3 +60,18 @@
   margin: 0 auto;
   width: 70%;
 }
+
+.online, .offline {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 45px;
+  border: 2px solid #000;
+}
+
+.online {
+  background-color: #0f0;
+}
+
+.offline {
+  background-color: #f00;
+}

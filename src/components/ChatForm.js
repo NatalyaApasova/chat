@@ -45,7 +45,13 @@ export default class ChatForm extends React.Component {
 
     let hidden;
     let visibilityChange; 
-    if (typeof document.webkitHidden !== "undefined") {
+    if (typeof document.hidden !== "undefined") {
+      hidden = "hidden";
+      visibilityChange = "visibilitychange";
+    } else if (typeof document.msHidden !== "undefined") {
+      hidden = "msHidden";
+      visibilityChange = "msvisibilitychange";
+    } else if (typeof document.webkitHidden !== "undefined") {
       hidden = "webkitHidden";
       visibilityChange = "webkitvisibilitychange";
     }
@@ -59,7 +65,7 @@ export default class ChatForm extends React.Component {
         }
       let title = msg.from;
       let body =  msg.message;
-      const notification = new Notification(`From: ${title}: \"${body}\"`);
+      const notification = new Notification(`There is a new message for you from ${title}: \"${body}\"`);
       })
     }
   }
