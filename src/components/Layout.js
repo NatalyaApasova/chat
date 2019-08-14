@@ -4,7 +4,7 @@ import ChatForm from './ChatForm.js';
 import Login from './Login.js';
 import NetworkStatus from './NetworkStatus.js';
 
-class Layout extends React.Component {
+export default class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,9 +21,9 @@ class Layout extends React.Component {
 
   getNetworkStatus(online) {
     if (!navigator.onLine) {
-      this.setState({online: true})
+      this.setState({online: false})
     }
-    this.setState({online: false})
+    this.setState({online: true})
   }
 
   render() {
@@ -46,5 +46,3 @@ class Layout extends React.Component {
     );
   }
 }
-
-export {Layout};

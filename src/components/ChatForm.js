@@ -32,16 +32,43 @@ export default class ChatForm extends React.Component {
 
   wsMessage(e) {
     const chatMessage = JSON.parse(e.data);
-    console.log(chatMessage)
+    let newMessages = [];
     let date = DateTime.local().toLocaleString(DateTime.DATETIME_FULL);
     if (this.wsConnection && (chatMessage[0] !== undefined) && (this.props.login !== "Guest".toLowerCase())) {
-      const msg = {
-        from: chatMessage[0].from,
-        message: chatMessage[0].message,
-        date: date
+      if (chatMessage.length > 1) {
+        // console.log(chatMessage);
+        for (let i = 0; i < 100; i++) {
+          if (newMessages.length > 0 && (!chatMessage[i] || chatMessage[i].id == localStorage.getItem("msgId"))) {
+            break;
+          }
+          let msg = {
+            from: chatMessage[i].from,
+            message: chatMessage[i].message,
+            date: date
+          }
+          newMessages.unshift(msg);
+          console.log(newMessages);
+        }
+        newMessages = this.state.messages.concat(newMessages);
+        newMessages.splice(1, newMessages.length - 100);
+        console.log(newMessages);
+        localStorage.setItem("msgId", newMessages[newMessages.length - 1].id);
+        // this.setState({messages: [...this.state.messages, newMessages]});
+        this.setState({messages: newMessages});
+      } else {
+        const msg = {
+          from: chatMessage[0].from,
+          message: chatMessage[0].message,
+          date: date
+        }
+        localStorage.setItem("msgId", chatMessage[0].id);
+        this.setState({messages: [...this.state.messages, msg]});
       }
-      this.setState({messages: [...this.state.messages, msg]});
     }
+
+    // if (!navigator.onLine || !this.props.status) {
+    //   this.setState({messages: []});
+    // }
 
     let hidden;
     let visibilityChange; 
@@ -57,16 +84,16 @@ export default class ChatForm extends React.Component {
     }
 
     if (Notification.permission === "granted" && document[hidden]) {
-      chatMessage.map((msg) => {
+      setInterval(chatMessage.map((msg) => {
         msg = {
           from: chatMessage[0].from,
           message: chatMessage[0].message,
           date: date
         }
-      let title = msg.from;
-      let body =  msg.message;
-      const notification = new Notification(`A new messages from ${title}: \"${body}\"`);
-      })
+        let title = msg.from;
+        let body =  msg.message;
+        const notification = new Notification(`A new messages from ${title}: \"${body}\"`);
+      }), 500)
     }
   }
 
@@ -75,6 +102,9 @@ export default class ChatForm extends React.Component {
   }
 
   handleSubmit(event) {
+    // if (!this.props.status) {
+    //   this.setState(...this.state.offlineMessages, this.state.value );
+    // }
     const message = {
       from: localStorage.getItem('login') || this.props.login,
       message: this.state.value
@@ -84,7 +114,11 @@ export default class ChatForm extends React.Component {
 
   wsOpen(e) {
     console.log('Connect...')
-
+    // if (this.state.offlineMessages.length) {
+    //   this.state.offlineMessages.map((msg) => {
+    //     this.state.ws.send(JSON.stringify(msg));
+    //   })
+    // }
   }
 
   wsError() {

@@ -5,7 +5,7 @@ export default class NetworkStatus extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      online: true
+      online: false
     };
     this.goOnline = this.goOnline.bind(this);
     this.goOffline = this.goOffline.bind(this);
@@ -27,11 +27,6 @@ export default class NetworkStatus extends React.Component {
 
     window.addEventListener("online", this.goOnline);
     window.addEventListener("offline", this.goOffline);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("online", this.goOnline);
-    window.removeEventListener("offline", this.goOffline);
   }
    
   handleClick() {
