@@ -14,7 +14,6 @@ export default class Login extends React.Component {
   handleChange(event) {
     this.setState({value: event.target.value});
     this.setState({name: event.target.value});
-    console.log(this.state.value)
   }
 
   handleSubmit() {
@@ -25,7 +24,10 @@ export default class Login extends React.Component {
   render() {
     return (
       <>
-        <div><input type="text" value={this.state.value} onChange={this.handleChange} /><input type="submit" value="Change name" onClick={this.handleSubmit} /></div>
+        <div>
+          <input className="login-input" type="text" value={this.state.value} onChange={this.handleChange} />
+          <input className="login-submit" type="submit" value="Change name" onClick={this.handleSubmit} />
+        </div>
       </>
     )
   }
